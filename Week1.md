@@ -507,7 +507,7 @@ Deep learning : Machine learning의 한 분야로서 **인공 신경망**의 층
 - **초기의 인공신경망**
 - 다수의 입력으로부터 하나의 결과를 내보내는 알고리즘 
 
-<!-- 이미지 첨부 -->
+![alt text](images/Week1/image6.png)
 
 - `x` 는 입력 값, `w` 는 가중치 , `y`는 출력값 
 - 원은 인공뉴런에 해당
@@ -534,6 +534,8 @@ Deep learning : Machine learning의 한 분야로서 **인공 신경망**의 층
 
 
 ​	**다층 퍼셉트론 (MultiLayer Perceptron, MLP)**
+
+![alt text](images/Week1/image7.png)
 
 - 층을 더 쌓으면 만들 수 있다. 
 - 단층 : 입력층과 출력층만 존재한다. / 다층 : 중간에 층을 더 추가하였다. 
