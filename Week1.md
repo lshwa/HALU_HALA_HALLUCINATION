@@ -280,13 +280,13 @@ print : ['딥 러닝 자연어 처리가 재미있기는 합니다.', '그런데
 
 - 정규 표현식 문법 
 
+![alt text](images/Week1/image2.png)
 
-
-
+![alt text](images/Week1/image3.png)
 
 - 정규 표현식 모듈 함수 
 
-
+![alt text](images/Week1/image4.png)
 
 
 
