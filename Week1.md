@@ -28,3 +28,5 @@
 > - Gensim : 머신러닝을 사용해 토픽 모델링과 자연어 처리를 수행을 도와주는 오픈 소스 라이브러리
 > - Scikit-learn : 파이썬 머신러닝 라이브러리
 > - KoNLPy : 한국어 자연어 처리를 위한 형태소 분석기 패키지
+
+![alt text](images/Week1/image1.png)
