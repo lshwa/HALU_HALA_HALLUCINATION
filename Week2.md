@@ -36,7 +36,7 @@
 - 워드 임베딩 과정을 통해 나온 밀집 벡터 => **임베딩 벡터 (embedding vector)**
 
 <!-- 이미지 1 추가 --> 
-
+![alt text](images/Week2/image1.png)
 
 
 ### 09-02. 워드투벡터 (Word2Vec)
@@ -90,7 +90,8 @@
 
 
 <!-- 이미지 2, 3추가 -->
-
+![alt text](images/Week2/image2.png)
+![alt text](images/Week2/image3.png)
 
 
 (CBOW의 인공 신경망)
@@ -125,7 +126,7 @@
 - 중간에 있는 단어들을 입력으로 주변 단어들을 예측하는 방법 
 
 <!-- 이미지 4 추가 -->
-
+![alt text](images/Week2/image4.png)
 
 
 #### 5. NNLM vs Word2Vec
@@ -188,7 +189,7 @@ sg = 0은 CBOW, 1은 Skip-gram
 - 중심 단어와 주변 단어가 모두 입력, 이 두 단어가 실제로 윈도우 크기 내에 존재하는 이웃 관계인지 **확률을 예측**
 
 <!-- 이미지 5 추가 -->
-
+![alt text](images/Week2/image5.png)
 
 
 - 입력 1과 입력 2가 실제로 윈도우 크기 내에서 이웃 관계인 경우에 레이블에 1, 아닌 경우에 레이블에 0을 추가함. 
@@ -252,7 +253,7 @@ from IPython.display import SVG
 - 용어 설명 
 
 <!-- 이미지 6 추가 -->
-
+![alt text](images/Week2/image6.png)
 
 
 **GloVe** : **임베딩 된 중심 단어와 주변 단어 벡터의 내적이 전체 코퍼스에서의 동시 등장 확률이 되도록 만드는 것**
@@ -340,7 +341,7 @@ $$
 임베딩 층은 밀집 벡터로 맵핑, 가중치가 학습되는 것과 같은 방식으로 훈련
 
 <!-- 이미지 7 추가 -->
-
+![alt text](images/Week2/image7.png)
 
 
 - 특정 단어와 맵핑되는 정수를 인덱스로 가지는 테이블로부터 임베딩 벡터 값을 가져오는 룩업 테이블로 본다. 
