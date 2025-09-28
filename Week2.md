@@ -4,7 +4,7 @@
 
 ---
 
-## 워드 임베딩 (Word Embedding)
+## 09. 워드 임베딩 (Word Embedding)
 
 **워드 임베딩** 
 
@@ -404,21 +404,171 @@ $$
 
 
 
+---
+
 ### 10장 ~ 11장 중요해보이는 부분들 정리 
 
+- BiLSTM
+
+양방향 LSTM : 두 개의 독립적인 LSTM 아키텍처를 함께 사용하는 구조
+
+**왼쪽 단어부터 순차적으로 읽기**
 
 
 
+**합성공 신경망 (Convolution Neural Network)**
+
+이미지 처리에 주로 사요하지만, 이를 자연어 처리에도 사용
+
+- **합성공층 (Convolution layer)과 폴링층 (Pooling layer)**로 구성됨. 
 
 
 
+**채널** : 이미지 처리의 기본적
+
+- **(높이 너비 채널)** 이라는 3가지 텐서 
+- 때로는 깊이라고도 표현
 
 
 
+**합성곱 연산 (Convolution Operation)**
+
+- **이미지의 특징을 추출**
+- **커널 또는 필터**라는 n x m 의 크기의 행렬로 각 이미지와 커널의 원소의 값을 곱해서 모두 더한 값을 출력으로 하는 것을 말함. 
+- 합성곱 연산을 통해나온 결과 = **특성 맵 (feature map)** 이라고 함. 
 
 
 
+---
+
+## 12. 태깅 작업 (Tagging Task)
+
+각 단어가 어떤 유형에 속해있는지를 알아내는 작업 
+
+- **개체명 인식** : 사람, 장소, 단체 등 유형인지 
+- **품사 태깅** : 단어의 품사가 명사, 동사, 형용사 중 어떤 것인지 
 
 
 
+### 12-01. 케라스를 이용한 태깅 작업 개요 (Tagging Task using Keras)
+
+- RNN의 다-대-다 작업이면서 앞, 뒤 시점의 입력을 모두 참고하는 양방향 RNN 을 사용한다. 
+
+**시퀀스 레이블링 (Sequence Labeling)**
+
+- 입력 시퀀스 X에 대하여 레이블 시퀀스를 각각 부여하는 작업 
+
+> 이 책 실습에서는 **양방향 LSTM**을 사용함. 
+>
+> - 다음 단어의 정보도 참고가 가능함. 
+
+
+
+### 12-02. 양방향 LSTM를 이용한 품사 태깅 (Part-of-speech Tagging using Bi-LSTM)
+
+- 데이터 전처리 방법
+
+~~~
+	•	코퍼스: nltk.corpus.treebank.tagged_sents() (문장 단위, (단어, 품사) 쌍)
+	•	분리: zip(tagged_sentence)로 sentences(단어 시퀀스)와 pos_tags(태그 시퀀스) 분리
+	•	정수화: Keras Tokenizer 2개(입력/레이블 각각).
+vocab_size, tag_size는 len(tokenizer.word_index)+1
+	•	패딩: 가변 길이 → pad_sequences(..., maxlen=150, padding='post')
+	•	분할: train_test_split(..., test_size=0.2, random_state=777)
+~~~
+
+
+
+- 모델 설계 포인트
+
+  - **Embedding(mask_zero=True)**: PAD 토큰(0)을 마스킹해서 LSTM이 무시
+  - **Bidirectional(LSTM, return_sequences=True)**: 시퀀스 전체에 대해 시점별 은닉상태 필요(다대다)
+  - **TimeDistributed(Dense(tag_size, softmax))**: 각 시점별로 태그 분류
+  - **손실**: sparse_categorical_crossentropy (레이블을 원-핫으로 바꾸지 않고 정수 레이블 그대로 학습)
+
+  - **옵티마/하이퍼**: Adam(1e-3), embedding_dim=128, hidden_units=128, batch_size=128, epochs≈7
+
+
+
+### 12-03. 개체명 인식 (Named Entity Recognition)
+
+**개체명 인식**
+
+- **이름을 가진 개체**를 인식하겠다는 것
+- 어떤 이름을 의미하는 단어를 보고 그 단어가 어떤 유형인지 인식하는 것
+
+
+
+~~~
+NTLK 에서는 개체명 인식기 (NER chunker)를 지원하고 있음. 
+
+라이브러리 불러오는 방법
+from nltk import word_tokenize, pos_tag, ne_chunk
+~~~
+
+
+
+### 12-04. 개체명 인식의 BIO 표현 이해하기
+
+- 개체명 인식은 챗봇 등에서 주요 전처리 작업으로 까다로운면서도 반드시 필요한 작업
+
+
+
+#### 1. BIO 표현
+
+- Begin, Inside, Outside 
+
+~~~
+해 B-movie
+리 I-movie
+포 I-movie
+터 I-movie
+보 O
+러 O
+메 B-theater
+가 I-theater
+박 I-theater
+스 I-theater
+가 O
+자 O
+~~~
+
+예시1 ) EU call
+
+EU -> B-ORG (조직명 시작)
+
+call -> O (개체명 아님)
+
+EU 자체로 하나의 ORG 개체명이 끝났기 때문에 l-ORG는 붙지 않는다. 
+
+
+
+예시2 ) 공백 줄 의미 
+
+- 데이터에서 **빈 줄은 문장의 경계를 나타냄**
+
+
+
+### 12-06. BiLSTM-CRF 를 이용한 개체명 인식
+
+#### BiLSTM 
+
+- **입력 문맥 모델링**
+  - 전/후방 문맥을 통합해 각 토큰별 **클래스 점수**를 산출
+  - 이를 **emission score**라고 부름
+
+- 한계 : 토큰별 예측을 **독립적**으로 처리함. 
+
+#### CRF
+
+- **레이블 시퀀스 제약 학습**
+  - 전이점수로 레이블 간 연결규칙을 학습함
+- **목표함수** : 정답 시퀀스의 점수 - 모든 시퀀스의 log 합 
+  - **조건부 로그우도 최대화**
+
+> CRF 가 유리한 시점
+>
+> - 길게 이어지는 개체명의 비중이 높을 때
+> - 클래스 간 경계가 애매할때
+> - 스킴 제약이 성능에 중요할 때 
 
