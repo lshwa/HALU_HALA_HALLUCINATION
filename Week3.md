@@ -50,7 +50,7 @@
 **구조**
 
 <!-- 이미지 1 첨가 -->
-
+![alt text](images/Week3/Image1.png)
 
 
 **CBOW** (Continuous Bag of Words) 
@@ -84,6 +84,7 @@
 **모형**
 
 <!-- 이미지 2 첨가 -->
+![alt text](images/Week3/Image2.png)
 
 - 입력 문장을 순화신경망의 은닉상태를 통해 문장의 내용을 압축한 맥락 벡터로 인코딩 한 이후 그 맥락 벡터를 디코더의 입력으로 사용해서 순차적으로 출력 문장을 생성
 - 인코더에서 순차적으로 읽은 중간 단계의 은닉상태 값은 사용되지 않고, 맥락 벡터인 최종 은닉상태만 디코더에 전달된다. 
@@ -114,7 +115,7 @@
 **구조**
 
 <!-- 이미지 3 첨가 -->
-
+![alt text](images/Week3/Image3.png)
 
 
 **Dot-product attention**
@@ -132,7 +133,7 @@
 **다양한 종류의 어텐션들**
 
 <!-- 이미지 4 첨가 -->
-
+![alt text](images/Week3/Image4.png)
 
 
 ## 트랜스포머 (Transformer)
@@ -156,6 +157,7 @@ Seq2Seq 모형에서 순환신경망을 제거하고, 어텐션 메커니즘만 
 **트랜스포머의 구조**
 
 <!-- 이미지 5 첨가 -->
+![alt text](images/Week3/Image5.png)
 
 - 왼쪽의 인코더와 오른쪽의 디코더로 이루어져 있다. 
   - 여전히 **Encoder - Decoder** 형태이지만, **RNN 대신 전부 Self-Attention과 Feed-Forward Layer**로 구성
